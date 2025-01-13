@@ -1,0 +1,39 @@
+{{photos|json}}
+
+<div class="row">
+    <div *ngFor="let columns of columns" class="col">
+        {{columns.text}}
+
+    </div>
+    <div class="col">Options</div>
+</div>
+
+<div class="row">
+    <div *ngFor="let columns of columns" class="col">
+        <ng-container *ngIf="columns.type!='plain'; else notchange">
+        <input [type]="columns.type" class="form-control" [(ngModel)]="newPhoto[columns.key]">
+    </ng-container>
+    <ng-template #notchange>
+
+    </ng-template>
+    </div>
+    <div class="col">
+        <button (click)="addPhoto()" class="btn btn-outline-primary">Hozzáad</button>
+    </div>
+</div>
+
+<div *ngFor="let photo of photos" class="row">
+    <div *ngFor="let columns of columns" class="col">
+        <ng-container *ngIf="columns.type!='plain'; else notchange">
+            <input [type]="columns.type" class="form-control" [(ngModel)]="photo[columns.key]"/>    
+        </ng-container>
+        <ng-template #notchange>
+            {{photo[columns.key]}}
+        </ng-template>
+    </div>
+    <div class="col">
+        <button (click)="editPhoto(photo)" class="btn btn-outline-success">Szerkeszt</button>
+        <button (click)="deletePhoto(photo.id)" class="btn btn-outline-danger">Törlés</button>
+    </div>
+
+</div>
